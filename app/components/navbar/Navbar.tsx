@@ -1,11 +1,16 @@
 "use client";
 
+import { User } from "next-auth";
 import Container from "../Container";
 import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 
-const Navbar = () => {
+interface NavbarProps {
+  currentUser?: User | null;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
   return (
     <div className=" fixed w-full bg-white shadow-sm z-10">
       <div
@@ -18,7 +23,7 @@ const Navbar = () => {
           <div className=" flex flex-row items-center justify-between gap-3 md:gap-3">
             <Logo />
             <Search />
-            <UserMenu />
+            <UserMenu currentUser={currentUser} />
           </div>
         </Container>
       </div>

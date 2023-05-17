@@ -12,8 +12,11 @@ import { toast } from "react-hot-toast";
 import Button from "../Button";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
+  const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +26,6 @@ const LoginModal = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
     },
@@ -32,35 +34,27 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios
-      .post("/api/register", data)
-      .then(() => {
+    signIn("credentials", { ...data, redirect: false }).then((callback) => {
+      setIsLoading(false);
+      console.log(callback);
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+      if (callback?.ok && !callback?.error) {
+        toast.success("Logged in");
+        router.refresh();
         loginModal.onClose();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      }
+    });
   };
 
   const bodyContent = (
     <div className=" flex flex-col gap-4">
-      <Heading title="Welcome to Airbnb!" subtitle="Sign in!" />
+      <Heading title="Welcome back" subtitle="Login to your account!" />
       <Input
         id="email"
         label="Email"
         type="email"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="Name"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -85,13 +79,13 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div className=" text-neutral-500 text-center mt-4 font-light">
         <div className=" flex flex-row items-center justify-center  gap-2">

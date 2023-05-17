@@ -5,8 +5,10 @@ import Credentials from "next-auth/providers/credentials";
 
 import prisma from "@/app/libs/prismadb";
 import bcrypt from "bcrypt";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const handler: AuthOptions = NextAuth({
+const authOptions: AuthOptions = NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -56,4 +58,4 @@ const handler: AuthOptions = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
 });
 
-export { handler as GET, handler as POST };
+export { authOptions as GET, authOptions as POST };
