@@ -37,7 +37,7 @@ const Search = () => {
     }
 
     return "Any Week";
-  }, [getByValue, locationValue]);
+  }, [getByValue, locationValue, endDate, startDate]);
 
   const guestLabel = useMemo(() => {
     if (guestCount) {

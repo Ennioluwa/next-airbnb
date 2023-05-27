@@ -17,15 +17,15 @@ const DatePicker: React.FC<DatePickerProps> = ({
   onChange,
   disabledDates,
 }) => {
-  console.log(new Date());
-  const [defaultDate, setDefaultDate] = useState(new Date());
-  const disabledDatess = [
-    "2023-05-20",
-    "2023-05-21",
-    "2023-05-23",
-    "2023-05-24",
-    "2023-05-26",
-  ]; // Example disabled dates array
+  // console.log(new Date());
+  // const [defaultDate, setDefaultDate] = useState(new Date());
+  // const disabledDatess = [
+  //   "2023-05-20",
+  //   "2023-05-21",
+  //   "2023-05-23",
+  //   "2023-05-24",
+  //   "2023-05-26",
+  // ]; // Example disabled dates array
 
   // useEffect(() => {
   //   const firstNonDisabledDate = findFirstNonDisabledDate();
@@ -37,36 +37,36 @@ const DatePicker: React.FC<DatePickerProps> = ({
   //   if (!disabledDates?.length) {
   //     return new Date(currentDate);
   //   }
-  const currentDate = new Date().toISOString().split("T")[0]; // Get current date in the format 'YYYY-MM-DD'
-  let nextDate = new Date(currentDate);
-  useEffect(() => {
-    let i;
-    for (i = 0; i < 20; i++) {
-      if (isDateDisabled(nextDate)) {
-        console.log("disabled");
-        nextDate.setDate(nextDate.getDate() + 1);
-        console.log(nextDate);
-      } else {
-        console.log("not disabled", nextDate);
-        return;
-      }
-    }
-    // while (isDateDisabled(nextDate)) {
-    //   nextDate.setDate(nextDate.getDate() + 1); // Add a day to the current date
-    // }
-    console.log(nextDate);
-  }, []);
+  // const currentDate = new Date().toISOString().split("T")[0]; // Get current date in the format 'YYYY-MM-DD'
+  // let nextDate = new Date(currentDate);
+  // useEffect(() => {
+  //   let i;
+  //   for (i = 0; i < 20; i++) {
+  //     if (isDateDisabled(nextDate)) {
+  //       console.log("disabled");
+  //       nextDate.setDate(nextDate.getDate() + 1);
+  //       console.log(nextDate);
+  //     } else {
+  //       console.log("not disabled", nextDate);
+  //       return;
+  //     }
+  //   }
+  //   // while (isDateDisabled(nextDate)) {
+  //   //   nextDate.setDate(nextDate.getDate() + 1); // Add a day to the current date
+  //   // }
+  //   console.log(nextDate);
+  // }, []);
 
-  const isDateDisabled = (date: Date) => {
-    const dateString = date.toISOString().split("T")[0]; // Convert date to 'YYYY-MM-DD' format
-    let dateDisabled = disabledDates?.map(
-      (data) => data.toISOString().split("T")[0]
-    );
-    console.log(dateDisabled, "disabled", dateString, "string");
-    console.log();
+  // const isDateDisabled = (date: Date) => {
+  //   const dateString = date.toISOString().split("T")[0]; // Convert date to 'YYYY-MM-DD' format
+  //   let dateDisabled = disabledDates?.map(
+  //     (data) => data.toISOString().split("T")[0]
+  //   );
+  //   console.log(dateDisabled, "disabled", dateString, "string");
+  //   console.log();
 
-    return dateDisabled?.includes(dateString);
-  };
+  //   return dateDisabled?.includes(dateString);
+  // };
 
   // for (let date of disabledDates) {
   //   if (date.toISOString() > currentDate) {
