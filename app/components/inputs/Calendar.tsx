@@ -83,11 +83,11 @@ const DatePicker: React.FC<DatePickerProps> = ({
     <DateRange
       rangeColors={["#262626"]}
       ranges={[value]}
-      date={nextDate}
+      date={new Date()}
       onChange={onChange}
       direction="vertical"
       showDateDisplay={false}
-      minDate={nextDate}
+      minDate={new Date()}
       disabledDates={disabledDates}
     />
   );
